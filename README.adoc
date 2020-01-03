@@ -40,3 +40,20 @@ chmod +x /usr/local/bin/scm-indent
 ----
 
 The code has a shebang that requires `guile` but besides that, it should run on any scheme.
+
+=== Integrations
+
+For http://kakoune.org[kakoune]
+
+.kakrc file
+[source]
+----
+hook global WinSetOption filetype=(lisp|scheme) %{
+	define-command -override -hidden lisp-indent-on-new-line %{
+		try %{
+        		exec -draft '[b<a-x>|scm-indent -1<ret>'
+        		exec '<a-;>h'
+        	}
+	}
+}
+----
