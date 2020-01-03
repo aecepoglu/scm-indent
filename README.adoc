@@ -1,0 +1,35 @@
+= scm-indent
+
+A simple tool that indents scheme code.
+
+It doesn't deal with exceptional cases, so ``define``s and ``let``s and other cases that require irregular indentation cases are not handled (yet).
+
+[NOTE]
+====
+I built this because the text editor I was using wasn't indenting my code properly. At the moment the tool may indent the code unconventionally (due to me ignoring exceptions to indentation to ease the implementation), but it works reliably and correctly.
+
+I plan to patch the missing cases pretty soon
+====
+
+== Usage
+
+`ocp-indent [offset]`. Reads code from stdin and writes code to stdout.
+
+`[offset]` is the line number until which the code will be untouched. Can be set to `-1` to indent the last line only (helpful in integrating with a text-editor)
+
+.Example
+[source]
+----
+cat code.scm | ocp-indent -1
+----
+
+== Install
+
+.manual installation
+[source]
+----
+cp code.scm /usr/local/bin/scm-indent
+chmod +x /usr/local/bin/scm-indent
+----
+
+The code has a shebang that requires `guile` but except for that, it should run on any scheme.
