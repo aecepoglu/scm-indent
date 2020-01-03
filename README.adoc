@@ -25,6 +25,13 @@ cat code.scm | ocp-indent -1
 
 == Install
 
+.on archlinux
+[source]
+----
+cd aur
+makepkg -sri
+----
+
 .manual installation
 [source]
 ----
@@ -32,4 +39,4 @@ cp code.scm /usr/local/bin/scm-indent
 chmod +x /usr/local/bin/scm-indent
 ----
 
-The code has a shebang that requires `guile` but except for that, it should run on any scheme.
+The code has a shebang that requires `guile` but besides that, it should run on any scheme.

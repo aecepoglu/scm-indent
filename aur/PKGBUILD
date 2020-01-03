@@ -1,0 +1,53 @@
+# Maintainer: aecepoglu <aecepoglu@fastmail.fm>
+pkgname=scm-indent
+pkgver=1.3.2
+pkgrel=1
+pkgdesc="scm-indent: A very simple tool that indents your scheme code. Built to be plugged alongside an editor"
+arch=('x86_64')
+url="https://github.com/aecepoglu/scm-indent"
+license=('GPL3')
+groups=()
+depends=('guile')
+makedepends=('git')
+provides=('scm-indent')
+conflicts=('scm-indent')
+replaces=()
+backup=()
+options=()
+install=
+source=()
+noextract=()
+md5sums=() #generate with 'makepkg -g'
+
+_gitroot=https://github.com/aecepoglu/scm-indent.git
+_gitname=THE_GIT_REPO
+
+build() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+
+  if [[ -d "$_gitname" ]]; then
+    cd "$_gitname" && git pull origin
+    msg "The local files are updated."
+  else
+    git clone "$_gitroot" "$_gitname"
+  fi
+
+  msg "GIT checkout done or server timeout"
+  msg "Starting build..."
+
+  rm -rf "$srcdir/$_gitname-build"
+  git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build"
+  cd "$srcdir/$_gitname-build"
+}
+
+package() {
+  cd "$srcdir/$_gitname-build"
+  install -TD code.scm $pkgdir/usr/bin/scm-indent
+}
+post_install() {
+  guild $1
+  #should I make an effort to remove the file from cache on post_remove?
+}
+
+# vim:set ts=2 sw=2 et:
